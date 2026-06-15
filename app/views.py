@@ -6,6 +6,7 @@ from django.db.models.functions import Length
 
 from django.http import HttpResponse
 
+from django.db.models import Q
 
 def display_topic(request):
     ATO=Topic.objects.all()
@@ -50,9 +51,29 @@ def display_webpage(request):
 
     #for case sensitive use regex
     QSLWO=Webpage.objects.filter(name__regex='^m')    #case sensitive
+    
+
+    QSLWO=Webpage.objects.all()
+    QSLWO=Webpage.objects.filter(topic_name='Cricket' , name="Bunty")
+
+    QSLWO=Webpage.objects.all()
+    QSLWO=Webpage.objects.filter(Q(topic_name='Cricket') | Q(name="ronaldo"))
 
 
 
+
+    LWO=Webpage.objects.all().values('name')
+    print(LWO)
+
+    LWO=Webpage.objects.all().values_list('name')
+    print(LWO)
+
+    LWO=Webpage.objects.all().only('name')
+    print(LWO)
+    
+
+    LWO=Webpage.objects.all().defer('name')
+    print(LWO)
     
     d={'QSLWO':QSLWO}
     return render(request,'display_webpage.html',d)
@@ -93,5 +114,14 @@ def display_webpage(request):
 def display_access(request):
     AAO=AccessRecords.objects.all()
     
+
+    AAO=AccessRecords.objects.filter(date__year='2026')
+    AAO=AccessRecords.objects.filter(date__month__gte='6')
+    AAO=AccessRecords.objects.filter(date__day__lte='20')
+
+
+
+
+
     d={'AAO':AAO}
     return render(request,'display_access.html',d)

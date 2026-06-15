@@ -14,7 +14,8 @@ class Webpage(models.Model):
     url=models.URLField()
     email=models.EmailField()
     def __str__(self):
-        return str(self.pk)
+        #return str(self.pk)
+        return self.name
 
     
 
